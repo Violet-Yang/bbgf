@@ -2,6 +2,7 @@
   <div id="wrap_top" style="position: relative;">
     <div class="left flex-all-center" v-if="isBack!=null"><img src="/static/ico_right.png"> </div>
     <div class="left flex-all-center" v-if="isClose!=null"><img src="/static/ico_close.png"></div>
+    <div class="left flex-all-center" v-if="isMenu!=null"><img src="/static/ico_menu.png"></div>
     <div class="center flex-all-center" v-if="title!=null" style="position: absolute; width: 100%; height: 100%">{{title}}</div>
     <div class="center flex-all-center" v-if="title===null" style="position: absolute; width: 100%; height: 100%"><img src="/static/logo_top.png"></div>
     <div class="right flex-all-center" v-if="isCart!=null"><img src="/static/ico_cart.png"> </div>
@@ -12,7 +13,7 @@
 <script>
 export default {
   name: "Top_div",
-  props : [ "isBack", "isClose", "title", "isCart"],
+  props : [ "isBack", "isClose", "title", "isCart", "isMenu"],
   data () {
     return {
       right : null

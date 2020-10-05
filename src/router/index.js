@@ -8,6 +8,7 @@ import SearchOrderList from "../components/SearchOrderList"
 import OrderList from "../components/OrderList"
 import BeforeCart from "../components/beforeCart";
 import Main from "../components/Main";
+import BreedIntro from "../components/BreedIntro"
 import farmInfo from "../components/farmInfo"
 
 Vue.use(Router)
@@ -53,6 +54,13 @@ export default new Router({
       path: '/main',
       name: 'Main',
       component: Main
+    },
+
+
+    {
+      path: '/BreedIntro',
+      name: 'BreedIntro',
+      component: BreedIntro
     },
 
     {

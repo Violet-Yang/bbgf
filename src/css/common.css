@@ -1,0 +1,11 @@
+
+.flex-ali-jus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.border-bottom {
+  border-bottom : 1px solid #e1e1e1;
+  margin: 20px 0;
+}

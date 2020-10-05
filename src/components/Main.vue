@@ -2,7 +2,7 @@
   <!--  <link rel="stylesheet" href="../css/common.css">-->
   <div id="wrap">
     <div style="width: 100%">
-      <topBox is-cart="" is-back="" :title="null"></topBox>
+      <topBox is-cart="" is-menu="" :title="null"/>
       <!--이미지 슬라이드로 처리하기-->
       <carousel
         :per-page="1"
@@ -20,7 +20,17 @@
           <img src="/static/main_sample_img_01.png" />
         </slide>
       </carousel>
-      <!--      <img src="/static/main_sample_img_01.png" />-->
+
+      <!-- menuBar show div -->
+      <div id="menuDiv">
+        <div>
+
+        </div>
+
+
+
+
+      </div>
 
       <!-- title 별별귤팜~~~~골라보세요-->
       <div style="margin: 0; padding: 0 24px">
@@ -431,6 +441,10 @@ span {
   /*flex-direction: column;*/
   height: 100%;
   width: 100%;
+}
+
+#menuDiv {
+  z-index: 9999; width: 360px; height: 760px; background-color: #878D91; position: absolute; top : 0px; left: 0px
 }
 
 /* 가로 세로 중앙 정렬 */

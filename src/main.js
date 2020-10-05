@@ -4,9 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import top from './components/child/Top_div'
+import level from './components/child/Level_div'
 import axios from 'axios' // Axios 임포트
 
 Vue.component('topBox', top)
+Vue.component('levelBox', level)
 Vue.config.productionTip = false
 
 // 전역 configuration 설정
