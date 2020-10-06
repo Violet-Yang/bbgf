@@ -2,7 +2,7 @@
   <!--  <link rel="stylesheet" href="../css/common.css">-->
   <div id="wrap">
     <div style="width: 100%">
-      <topBox is-cart="" is-menu="" :title="null"/>
+      <topBox :is-cart="true" :is-menu="true" :title="null" />
       <!--이미지 슬라이드로 처리하기-->
       <carousel
         :per-page="1"
@@ -22,14 +22,74 @@
       </carousel>
 
       <!-- menuBar show div -->
-      <div id="menuDiv">
-        <div>
-
+      <div id="menuDiv" v-if="icon_menu">
+        <div
+          style="
+            margin-top: 38px;
+            display: flex;
+            justify-content: space-between;
+          "
+        >
+          <img
+            style="margin-left: 16px; height: 26px"
+            src="static/logo_top.png"
+          />
+          <div style="margin-right: 16px; width: 24px; height: 24px">
+            <!--닫기 버튼 -->
+            <img @click="doClose()" src="static/ico_close.png" />
+          </div>
         </div>
 
+        <!-- 2nd market/intro -->
+        <div style="padding: 0 10px; margin-top: 18px">
+          <div class="div_title">
+            <div style="display: flex; align-items: center">
+              <img style="margin-left: 15px" src="static/ico_market.png" /><span
+                style="margin-left: 10px; font-size: 16px; color: #333333"
+                >마켓</span
+              >
+            </div>
+            <div @click="showHidedMenu()" style="display: flex; align-items: center">
+              <img style="margin-right: 16px" src="static/ico_chevron_down.png" />
+            </div>
+          </div><!--마켓 div 끝-->
+          <!-- 마켓 div 클릭했을 때 나오는 드롭바 -->
+          <div v-if="isDown!=false" style="margin-top: 10px; font-size: 14px; color: #333333; text-align: left; display: flex;">
+            <div v-for="eachBreed in breedList" style="width: 140px; height: 40px; display: flex; align-items: center"><span style="margin-left: 16px">{{ eachBreed.breed }}</span></div>
 
 
+          </div>
 
+          <!--소개 div 시작 -->
+          <div class="div_title" style="margin-top: 12px">
+            <div style="display: flex; align-items: center">
+              <img style="margin-left: 15px" src="static/ico_introduce.png" /><span
+                style="margin-left: 10px; font-size: 16px; color: #333333"
+                >소개</span
+              >
+            </div>
+            <div @click="showHidedMenu()" style="display: flex; align-items: center">
+              <img :class="{icon_down : this.isDown===true, icon_up : this.isDown===false}" style="margin-right: 16px"/>
+            </div>
+          </div><!-- 소개 div 끝 -->
+          <!-- 소개 div 클릭했을 때 나오는 드롭바 -->
+          <div v-if="isDown!=false" style="margin-top: 10px; font-size: 14px; color: #333333; text-align: left; display: flex;">
+            <div v-for="eachBreed in breedList" style="width: 140px; height: 40px; display: flex; align-items: center"><span style="margin-left: 16px">{{ eachBreed.breed }}</span></div>
+
+
+          </div>
+
+        </div>
+        <!-- 3rd 주문조회~카카오톡 문의-->
+        <div style="padding: 0 10px; text-align: left">
+          <div style="border-bottom: 0.5px solid #e1e1e1; margin: 16px 0"></div>
+          <div class="menu_subTitle"><span style="margin-left: 16px">주문조회</span></div>
+          <div class="menu_subTitle"><span style="margin-left: 16px">배송안내</span></div>
+          <div class="menu_subTitle"><span style="margin-left: 16px">대량주문 문의</span></div>
+          <div class="menu_subTitle"><span style="margin-left: 16px">자주 묻는 질문</span></div>
+          <div class="menu_subTitle"><span style="margin-left: 16px">카카오톡 문의</span></div>
+
+        </div>
       </div>
 
       <!-- title 별별귤팜~~~~골라보세요-->
@@ -61,10 +121,7 @@
         </div>
       </div>
       <div style="display: flex; padding: 20px 8px">
-        <div
-          style="width: 62px; margin: 0 12px"
-          v-for="eachBreed in breed"
-        >
+        <div style="width: 62px; margin: 0 12px" v-for="eachBreed in breed">
           <img
             style="
               width: 62px;
@@ -268,15 +325,33 @@ export default {
     Carousel,
     Slide,
   },
+  methods : {
+
+    showMenu() {
+      this.icon_menu = true;
+      console.log("메뉴버튼클릭");
+    },
+    showHidedMenu () {
+      this.isDown = !this.isDown;
+    },
+
+    doClose () {
+      this.icon_menu = false;
+    }
+  },
   data() {
     return {
-      farm : [],
-      breed : [],
+      /**/
+      icon_menu : false,
+      isDown : false,
+      farm: [],
+      breed: [],
       breedList: [
         { breed: "전체보기", img: "../static/main_btn_01.png" },
         { breed: "한라봉", img: "/static/main_btn_03.png" },
         { breed: "천혜향", img: "/static/main_btn_05.png" },
-        { breed: "오렌지", img: "/static/main_btn_04.png" },
+        // { breed: "오렌지", img: "/static/main_btn_04.png" },
+        // { breed: "황금향", img: "/static/main_btn_04.png" },
       ],
       farmInfo: [
         {
@@ -359,18 +434,18 @@ export default {
   },
   created: function () {
     let vue = this;
-    axios.get(BREED_LIST)
+    axios
+      .get(BREED_LIST)
       .then((result) => {
-      console.log(result);
-      if (result.status === 200) {
-        vue.breed = result.data.content;
-        console.log("breed에 들어있는 값:" + vue.breed[0].typeName);
-      }
-    })
-      .catch(error => {
-        alert(error);
+        console.log(result);
+        if (result.status === 200) {
+          vue.breed = result.data.content;
+          console.log("breed에 들어있는 값:" + vue.breed[0].typeName);
+        }
       })
-      ,
+      .catch((error) => {
+        alert(error);
+      }),
       axios
         .get(FARM_LIST)
         .then((res) => {
@@ -406,6 +481,14 @@ li:after {
   border: #ffffff;
 }
 
+.icon_down{
+  background-image: url("/static/ico_chevron_down.png");
+
+}
+.icon_up {
+  background-image: url("/static/ico_chevron_up.png");
+}
+
 /* 뷰포트가 768이하인 경우에만 해당 css 적용하기 */
 @media screen and (min-width: 768px) {
   .banner_div,
@@ -425,9 +508,9 @@ span {
   padding: 0;
 }
 
-span {
-  display: inline-block;
-}
+/*span {*/
+/*  display: inline-block;*/
+/*}*/
 
 *::before,
 *::after {
@@ -442,10 +525,38 @@ span {
   height: 100%;
   width: 100%;
 }
-
+/* 메뉴팝업 css */
 #menuDiv {
-  z-index: 9999; width: 360px; height: 760px; background-color: #878D91; position: absolute; top : 0px; left: 0px
+  z-index: 9999;
+  width: 300px;
+  height: 760px;
+  background-color: #ffffff;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 1px solid #e1e1e1;
 }
+
+/* menu market div css */
+.div_title {
+  z-index: 2;
+  width: 280px;
+  height: 54px;
+  background-color: rgba(255, 146, 29, 0.06);
+  border-radius: 4px;
+  /*opacity: 0.06;*/
+  display: flex;
+  justify-content: space-between;
+}
+/* menu 주문조회 div css */
+.menu_subTitle {
+  width: 280px; height: 40px;
+  text-align: left;
+  color: #333333;
+  font-size: 14px;
+
+}
+
 
 /* 가로 세로 중앙 정렬 */
 .flex-ali-jus {
