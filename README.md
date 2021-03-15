@@ -1,6 +1,6 @@
 # 별별귤팜
 
-![img_main](https://user-images.githubusercontent.com/50068478/111103053-e5ac6f00-8590-11eb-9ab4-f7ea3ea33430.JPG)
+![img_main_gfam](https://user-images.githubusercontent.com/50068478/111104070-286f4680-8593-11eb-93f7-927839a1ec5a.jpg)
 
 
 > **A Vue.js project**
